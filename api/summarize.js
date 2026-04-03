@@ -15,11 +15,12 @@ export default async function handler(req, res) {
 
   const sessionId = getSessionId()
 
-  const [proposals, votes, comments] = await Promise.all([
+  const [proposals, votes, comments, terms] = await Promise.all([
     kv.get(KEYS.proposals(sessionId)).then(v => v || []),
     kv.get(KEYS.votes(sessionId)).then(v => v || []),
     kv.get(KEYS.comments(sessionId)).then(v => v || []),
+    kv.get(KEYS.terms(sessionId)).then(v => v || []),
   ])
 
-  return res.status(200).json({ sessionId, proposals, votes, comments })
+  return res.status(200).json({ sessionId, proposals, votes, comments, terms })
 }

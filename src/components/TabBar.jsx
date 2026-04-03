@@ -22,7 +22,8 @@ export default function TabBar({ proposals, activeTab, onTabChange, onAddProposa
 
   return (
     <div className="tabbar-wrapper">
-      <div className="tabbar">
+      <div className="tabbar-outer">
+        <div className="tabbar">
         <button
           className={`tab ${activeTab === 'overview' ? 'tab--active' : ''}`}
           onClick={() => onTabChange('overview')}
@@ -39,13 +40,14 @@ export default function TabBar({ proposals, activeTab, onTabChange, onAddProposa
               className={`tab ${activeTab === tabId ? 'tab--active' : ''}`}
               onClick={() => onTabChange(tabId)}
             >
-              <span className="tab-title">{p.title}</span>
-              <span className={`tab-score ${score > 0 ? 'score--positive' : score < 0 ? 'score--negative' : ''}`}>
-                {score > 0 ? '+' : ''}{score}
-              </span>
-            </button>
-          )
-        })}
+                <span className="tab-title">{p.title}</span>
+                <span className={`tab-score ${score > 0 ? 'score--positive' : score < 0 ? 'score--negative' : ''}`}>
+                  {score > 0 ? '+' : ''}{score}
+                </span>
+              </button>
+            )
+          })}
+        </div>
 
         <button
           className={`tab tab--add ${showForm ? 'tab--add-active' : ''}`}

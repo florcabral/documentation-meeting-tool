@@ -1,6 +1,6 @@
 # Landing page navigation — proposals
 
-## Option 1: by customer need
+## By customer need
 
 Groups content by what problem the reader is trying to solve. Each section answers a specific question a customer might have.
 
@@ -9,7 +9,7 @@ Groups content by what problem the reader is trying to solve. Each section answe
 - Security & compliance
 - Integration & extensions
 
-## Option 2: by lifecycle stage
+## By lifecycle stage
 
 Good for readers who know what stage they are in. Maps to the journey from first install to long-term operation.
 
@@ -19,7 +19,7 @@ Good for readers who know what stage they are in. Maps to the journey from first
 - Operate
 - Maintain
 
-## Option 3: by product area
+## By product area
 
 Mirrors the internal team structure. Familiar to contributors but may not match how customers think.
 
@@ -29,7 +29,7 @@ Mirrors the internal team structure. Familiar to contributors but may not match 
 - LXD
 - Juju
 
-## Option 4: hybrid (need + product)
+## Hybrid (need + product)
 
 Top level by customer need, second level by product. Balances discoverability for new customers with precision for experienced ones.
 

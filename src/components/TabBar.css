@@ -2,17 +2,18 @@
   border-bottom: 1px solid var(--border);
 }
 
-.tabbar {
+.tabbar-outer {
   display: flex;
   align-items: stretch;
-  gap: 2px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
 }
 
-.tabbar::-webkit-scrollbar {
-  display: none;
+.tabbar {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
 }
 
 .tab {
@@ -73,9 +74,10 @@
 .tab--add {
   font-size: 18px;
   font-weight: 400;
-  padding: 10px 14px;
+  padding: 10px 16px;
   color: var(--text-muted);
-  margin-left: 4px;
+  border-left: 1px solid var(--border);
+  flex-shrink: 0;
 }
 
 .tab--add:hover {

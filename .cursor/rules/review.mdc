@@ -12,6 +12,10 @@ When the user runs `/review`, follow these steps:
 2. Parse every `## ` heading as a proposal title. Collect the body text below each heading as the proposal body (everything up to the next `## ` or end of file).
 3. Follow the instructions in `.cursor/prompts/review.md` exactly.
 4. Write the resulting `session.json` to the project root.
-5. Confirm to the user: how many proposals were loaded, and what `session.json` now contains.
+5. Tell the user to run this command to clear the app and reload from the new session.json:
+   ```bash
+   curl -X POST http://localhost:3000/api/reset
+   ```
+6. Confirm to the user: how many proposals were loaded, and what `session.json` now contains.
 
 Only trigger this rule when the user message starts with `/review` or explicitly asks to load proposals into the app.

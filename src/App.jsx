@@ -123,13 +123,16 @@ export default function App() {
 
   const handleAddProposal = async (title, body) => {
     requireName(async (author) => {
-      await fetch('/api/proposals', {
+      const res = await fetch('/api/proposals', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title, body, author }),
       })
+      const data = await res.json()
       await fetchAll()
-      setActiveTab(title.toLowerCase().replace(/\s+/g, '-'))
+      if (data.proposal?.id) {
+        setActiveTab(data.proposal.id)
+      }
     })
   }
 

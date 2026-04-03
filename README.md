@@ -90,7 +90,7 @@ Four slash commands form the facilitator's workflow. Each is wired as a `rule �
 | `/propose` | Starting from raw source material | Reads all files in `context/`, generates 3–4 structured proposals, writes `proposals.generated.md`, then runs `/review` on it automatically. Never touches `proposals.md`. |
 | `/review` | Hand-written proposals are ready | Reads `proposals.md` by default, or a named file: `/review proposals.generated.md`. Parses `## ` headings as proposals, extracts votable terms from bullet points, writes `session.json`. |
 | `/preferences` | Mid-meeting, after term voting | Fetches live term vote scores, synthesises a new cluster proposal from the top-voted terms, appends it to the active proposals file, and runs `/review` automatically. |
-| `/summarize` | End of meeting | Fetches the final vote state from Vercel KV and reads `session.json`, then writes `discussion.md` with the full decision record. |
+| `/summarize` | End of meeting | Fetches proposals, votes, comments, and term votes from Vercel KV. Writes `discussion.md` with the winning proposal, term voting scores and signal, individual vote breakdowns, and all comments. |
 
 ### Proposals file format
 
@@ -125,18 +125,20 @@ Maps to the reader's journey from evaluation to long-term maintenance.
 
 1. Write `proposals.md` by hand (or from a previous meeting's `discussion.md`)
 2. Run `/review` in Cursor
-3. Start `npm run dev`, share the URL with the team
-4. During the meeting: everyone votes, comments, adds proposals as needed
-5. Run `/summarize` after the meeting
+3. Fresh reset to clear any previous session: `curl -X POST http://localhost:3000/api/reset -H "Content-Type: application/json" -d '{"fresh":true}'`, then reload: `curl -X POST http://localhost:3000/api/reset`
+4. Start `npm run dev`, share the URL with the team
+5. During the meeting: everyone votes, comments, adds proposals as needed
+6. Run `/summarize` after the meeting
 
 ### Workflow B — proposals generated from raw notes
 
-1. Drop your source material into the `context/` directory — meeting notes, a Google Doc export, a spec, a PDF, bullet points (any plain text or markdown files)
-2. Run `/propose` — Cursor reads everything in `context/`, generates 3–4 structured proposals, writes `proposals.generated.md`, and loads it automatically
-3. Review `proposals.generated.md` and edit if needed, or promote options into `proposals.md`
-4. Start `npm run dev`, share the URL
-5. During the meeting: everyone votes, comments, adds proposals as needed
-6. Run `/summarize` after the meeting
+1. Fresh reset to clear any previous session: `curl -X POST http://localhost:3000/api/reset -H "Content-Type: application/json" -d '{"fresh":true}'`
+2. Drop your source material into the `context/` directory — meeting notes, a Google Doc export, a spec, a PDF, bullet points (any plain text or markdown files)
+3. Run `/propose` — Cursor reads everything in `context/`, generates 3–4 structured proposals, writes `proposals.generated.md`, and loads it automatically
+4. Review `proposals.generated.md` and edit if needed, or promote options into `proposals.md`
+5. Start `npm run dev`, share the URL
+6. During the meeting: everyone votes, comments, adds proposals as needed
+7. Run `/summarize` after the meeting
 
 ### Workflow C — using term voting mid-meeting
 
@@ -151,15 +153,23 @@ This workflow is useful when the team can't agree on which structural option to 
 5. **Synthesise.** Run `/preferences` in Cursor. It reads the top-voted terms and appends a new cluster proposal to `proposals.md`, then reloads it into the app automatically.
 6. **Final cluster vote.** The synthesised proposal appears as a new tab. The team votes on it alongside the originals.
 
-### Resetting the app between sessions
+### Resetting the app
 
-To clear all votes, comments, and proposals and reload from `session.json`:
+**Reload from current proposals** — clears all votes, comments, and chips from KV and reseeds from `session.json`:
 
 ```bash
 curl -X POST http://localhost:3000/api/reset
 ```
 
-The response confirms how many proposals and terms were loaded.
+**Start from a clean slate** — clears KV, sets all keys to empty, and blanks `session.json`. Use this before running `/propose` or `/review` with new content:
+
+```bash
+curl -X POST http://localhost:3000/api/reset \
+  -H "Content-Type: application/json" \
+  -d '{"fresh":true}'
+```
+
+After a fresh reset the app shows no proposals until you explicitly load them via `/review` or `/propose`.
 
 ---
 

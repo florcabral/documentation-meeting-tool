@@ -1,61 +1,8 @@
 {
-  "id": "20260403",
-  "title": "Landing page navigation",
-  "date": "2026-04-03",
+  "id": "",
+  "title": "",
+  "date": "",
   "facilitator": "facilitator",
-  "proposals": [
-    {
-      "id": "by-customer-need",
-      "title": "By customer need",
-      "body": "Groups content by what problem the reader is trying to solve. Each section answers a specific question a customer might have.\n\n- Packaging & distribution\n- Observability & monitoring\n- Security & compliance\n- Maintenance & operations",
-      "author": "facilitator",
-      "createdAt": "2026-04-03T09:00:00.000Z"
-    },
-    {
-      "id": "by-lifecycle-stage",
-      "title": "By lifecycle stage",
-      "body": "Good for readers who know what stage they are in. Maps to the journey from first install to long-term operation.\n\n- Develop\n- Build & publish\n- Deploy\n- Operate\n- Maintain",
-      "author": "facilitator",
-      "createdAt": "2026-04-03T09:00:00.000Z"
-    },
-    {
-      "id": "by-product-area",
-      "title": "By product area",
-      "body": "Mirrors the internal team structure. Familiar to contributors but may not match how customers think.\n\n- Snapcraft\n- Dedicated Snap Store\n- COS for robotics\n- Ubuntu Core\n- ROS ESM",
-      "author": "facilitator",
-      "createdAt": "2026-04-03T09:00:00.000Z"
-    },
-    {
-      "id": "hybrid-need-product",
-      "title": "Hybrid (need + product)",
-      "body": "Top level by customer need, second level by product. Balances discoverability for new customers with precision for experienced ones.\n\n- Get started (→ quickstarts per product)\n- Build & package (→ Snap, OCI, Charm)\n- Deploy & operate (→ Juju, LXD)\n- Monitor & secure (→ Observability stack)",
-      "author": "facilitator",
-      "createdAt": "2026-04-03T09:00:00.000Z"
-    }
-  ],
-  "terms": [
-    { "id": "term--packaging", "label": "Packaging" },
-    { "id": "term--distribution", "label": "Distribution" },
-    { "id": "term--observability", "label": "Observability" },
-    { "id": "term--monitoring", "label": "Monitoring" },
-    { "id": "term--security", "label": "Security" },
-    { "id": "term--compliance", "label": "Compliance" },
-    { "id": "term--maintenance", "label": "Maintenance" },
-    { "id": "term--operations", "label": "Operations" },
-    { "id": "term--develop", "label": "Develop" },
-    { "id": "term--build", "label": "Build" },
-    { "id": "term--publish", "label": "Publish" },
-    { "id": "term--deploy", "label": "Deploy" },
-    { "id": "term--operate", "label": "Operate" },
-    { "id": "term--maintain", "label": "Maintain" },
-    { "id": "term--snapcraft", "label": "Snapcraft" },
-    { "id": "term--dedicated-snap-store", "label": "Dedicated Snap Store" },
-    { "id": "term--cos-for-robotics", "label": "COS for robotics" },
-    { "id": "term--ubuntu-core", "label": "Ubuntu Core" },
-    { "id": "term--ros-esm", "label": "ROS ESM" },
-    { "id": "term--get-started", "label": "Get started" },
-    { "id": "term--package", "label": "Package" },
-    { "id": "term--monitor", "label": "Monitor" },
-    { "id": "term--secure", "label": "Secure" }
-  ]
+  "proposals": [],
+  "terms": []
 }

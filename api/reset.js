@@ -1,6 +1,15 @@
 import { kv, getSessionId, KEYS } from './_kv.js'
-import { readFileSync } from 'fs'
+import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
+
+const EMPTY_SESSION = {
+  id: '',
+  title: '',
+  date: '',
+  facilitator: 'facilitator',
+  proposals: [],
+  terms: [],
+}
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -12,7 +21,7 @@ export default async function handler(req, res) {
 
   const sessionId = getSessionId()
 
-  // Clear all session data
+  // Clear all session data from KV
   await Promise.all([
     kv.del(KEYS.proposals(sessionId)),
     kv.del(KEYS.votes(sessionId)),
@@ -20,7 +29,18 @@ export default async function handler(req, res) {
     kv.del(KEYS.terms(sessionId)),
   ])
 
-  // Reseed proposals and terms from session.json
+  // fresh: true — blank session.json and set all KV keys to empty arrays so
+  // the seeding logic never runs. Use before /propose or /review to start clean.
+  if (req.body?.fresh === true) {
+    writeFileSync(join(process.cwd(), 'session.json'), JSON.stringify(EMPTY_SESSION, null, 2))
+    await Promise.all([
+      kv.set(KEYS.proposals(sessionId), []),
+      kv.set(KEYS.terms(sessionId), []),
+    ])
+    return res.status(200).json({ ok: true, sessionId, fresh: true })
+  }
+
+  // Default — reseed proposals and terms from session.json
   let proposals = []
   let terms = []
   try {

@@ -21,6 +21,7 @@ export default function App() {
   const [terms, setTerms] = useState([])
   const [votes, setVotes] = useState([])
   const [comments, setComments] = useState([])
+  const [facilitator, setFacilitator] = useState('facilitator')
   const [activeTab, setActiveTab] = useState('overview')
   const [showNameModal, setShowNameModal] = useState(false)
   const [pendingAction, setPendingAction] = useState(null)
@@ -51,6 +52,7 @@ export default function App() {
 
       setProposals(pData.proposals || [])
       setTerms(pData.terms || [])
+      if (pData.facilitator) setFacilitator(pData.facilitator)
       setVotes(vData.votes || [])
       setComments(cData.comments || [])
       setLastUpdated(new Date())
@@ -111,6 +113,43 @@ export default function App() {
       })
       fetchAll()
     })
+  }
+
+  const handleRefreshTerms = async () => {
+    await fetch('/api/terms', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refresh: true }),
+    })
+    fetchAll()
+  }
+
+  const handleResetTerms = async () => {
+    await fetch('/api/terms', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ reset: true }),
+    })
+    fetchAll()
+  }
+
+  const handleAddTerm = async (label) => {
+    const res = await fetch('/api/terms', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ label }),
+    })
+    if (res.ok) fetchAll()
+    return res
+  }
+
+  const handleDeleteTerm = async (termId) => {
+    await fetch('/api/terms', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: termId }),
+    })
+    fetchAll()
   }
 
   const handleEditProposal = async (proposalId, title, body) => {
@@ -175,9 +214,12 @@ export default function App() {
                 onClick={() => setActiveTab('overview')}
                 title="Back to overview"
               >
-                ← Home
+                <span className="home-btn-arrow">←</span>
+                <span>Overview</span>
               </button>
             )}
+          </div>
+          <div className="header-center">
             <span className="app-logo">⬡</span>
             <span className="app-name">Docs Decision</span>
             {lastUpdated && (
@@ -231,6 +273,12 @@ export default function App() {
               getUserTermVote={getUserTermVote}
               onTermVote={handleTermVote}
               onAddProposal={handleAddProposal}
+              facilitator={facilitator}
+              authorName={authorName}
+              onRefreshTerms={handleRefreshTerms}
+              onResetTerms={handleResetTerms}
+              onAddTerm={handleAddTerm}
+              onDeleteTerm={handleDeleteTerm}
             />
           ) : activeProposal ? (
             <ProposalTab

@@ -69,7 +69,13 @@ export default async function handler(req, res) {
       terms = await seedTermsFromSessionJson(termsKey)
     }
 
-    return res.status(200).json({ proposals, terms, sessionId })
+    let facilitator = 'facilitator'
+    try {
+      const session = readSessionJson()
+      if (session.facilitator) facilitator = session.facilitator
+    } catch { /* use default */ }
+
+    return res.status(200).json({ proposals, terms, sessionId, facilitator })
   }
 
   if (req.method === 'POST') {

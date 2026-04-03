@@ -125,6 +125,139 @@
   color: var(--text-muted);
 }
 
+/* ── Terms section action buttons ────────────────────────── */
+
+.terms-refresh-btn,
+.terms-reset-btn {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 20px;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.terms-refresh-btn {
+  margin-left: auto;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--border);
+}
+
+.terms-refresh-btn:hover:not(:disabled) {
+  color: var(--text-primary);
+  border-color: var(--border-light);
+  background: var(--bg-elevated);
+}
+
+.terms-reset-btn {
+  color: var(--red);
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+.terms-reset-btn:hover:not(:disabled) {
+  background: var(--red-dim);
+  border-color: var(--red);
+}
+
+.terms-refresh-btn:disabled,
+.terms-reset-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* ── Chip delete button ───────────────────────────────────── */
+
+.term-delete-btn {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.12s;
+  opacity: 0;
+  margin-left: 2px;
+}
+
+.term-chip:hover .term-delete-btn {
+  opacity: 1;
+}
+
+.term-delete-btn:hover {
+  background: var(--red-dim);
+  color: var(--red);
+}
+
+/* ── Add term form ───────────────────────────────────────── */
+
+.add-term-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.add-term-input {
+  font-size: 13px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 14px;
+  color: var(--text-primary);
+  width: 200px;
+  transition: border-color 0.15s;
+}
+
+.add-term-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.add-term-input--error {
+  border-color: var(--red);
+}
+
+.add-term-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 18px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.add-term-btn:hover:not(:disabled) {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.add-term-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.add-term-error {
+  font-size: 12px;
+  color: var(--red);
+  width: 100%;
+}
+
 /* ── Overview section (proposals) ───────────────────────── */
 
 .overview-empty {

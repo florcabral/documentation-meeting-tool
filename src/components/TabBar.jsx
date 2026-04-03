@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './TabBar.css'
 
-export default function TabBar({ proposals, activeTab, onTabChange, onAddProposal, getScore }) {
+export default function TabBar({ proposals, activeTab, onTabChange, onAddProposal, getScore, hideOverview = false }) {
   const [showForm, setShowForm] = useState(false)
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
@@ -24,12 +24,14 @@ export default function TabBar({ proposals, activeTab, onTabChange, onAddProposa
     <div className="tabbar-wrapper">
       <div className="tabbar-outer">
         <div className="tabbar">
-        <button
-          className={`tab ${activeTab === 'overview' ? 'tab--active' : ''}`}
-          onClick={() => onTabChange('overview')}
-        >
-          Overview
-        </button>
+        {!hideOverview && (
+          <button
+            className={`tab ${activeTab === 'overview' ? 'tab--active' : ''}`}
+            onClick={() => onTabChange('overview')}
+          >
+            Overview
+          </button>
+        )}
 
         {proposals.map((p) => {
           const score = getScore(p.id)

@@ -6,9 +6,13 @@ function formatTime(dateStr) {
   return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 }
 
-export default function ProposalTab({ proposal, votes, comments, score, userVote, authorName, onVote, onComment, onDeleteComment }) {
+export default function ProposalTab({ proposal, votes, comments, score, userVote, authorName, onVote, onComment, onDeleteComment, onEdit }) {
   const [commentText, setCommentText] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [editTitle, setEditTitle] = useState('')
+  const [editBody, setEditBody] = useState('')
+  const [saving, setSaving] = useState(false)
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault()
@@ -19,18 +23,70 @@ export default function ProposalTab({ proposal, votes, comments, score, userVote
     setSubmitting(false)
   }
 
+  const startEdit = () => {
+    setEditTitle(proposal.title)
+    setEditBody(proposal.body || '')
+    setEditing(true)
+  }
+
+  const cancelEdit = () => {
+    setEditing(false)
+  }
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault()
+    if (!editTitle.trim()) return
+    setSaving(true)
+    await onEdit(editTitle.trim(), editBody.trim())
+    setSaving(false)
+    setEditing(false)
+  }
+
   return (
     <div className="proposal-tab">
       <div className="proposal-main">
         <div className="proposal-content">
-          <h1 className="proposal-title">{proposal.title}</h1>
-          <p className="proposal-meta">
-            Added by <strong>{proposal.author}</strong>
-            {proposal.createdAt && (
-              <> · {formatTime(proposal.createdAt)}</>
-            )}
-          </p>
-          <div className="proposal-body">{proposal.body}</div>
+          {editing ? (
+            <form className="edit-form" onSubmit={handleEditSubmit}>
+              <input
+                className="edit-title-input"
+                value={editTitle}
+                onChange={(e) => setEditTitle(e.target.value)}
+                required
+                autoFocus
+              />
+              <textarea
+                className="edit-body-input"
+                value={editBody}
+                onChange={(e) => setEditBody(e.target.value)}
+                rows={6}
+              />
+              <div className="edit-form-actions">
+                <button type="button" className="btn btn--ghost" onClick={cancelEdit}>
+                  Cancel
+                </button>
+                <button type="submit" className="btn btn--primary" disabled={!editTitle.trim() || saving}>
+                  {saving ? 'Saving…' : 'Save changes'}
+                </button>
+              </div>
+            </form>
+          ) : (
+            <>
+              <div className="proposal-title-row">
+                <h1 className="proposal-title">{proposal.title}</h1>
+                <button className="edit-btn" onClick={startEdit} title="Edit proposal">
+                  Edit
+                </button>
+              </div>
+              <p className="proposal-meta">
+                Added by <strong>{proposal.author}</strong>
+                {proposal.createdAt && (
+                  <> · {formatTime(proposal.createdAt)}</>
+                )}
+              </p>
+              <div className="proposal-body">{proposal.body}</div>
+            </>
+          )}
         </div>
 
         <div className="vote-panel">

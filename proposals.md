@@ -7,7 +7,7 @@ Groups content by what problem the reader is trying to solve. Each section answe
 - Packaging & distribution
 - Observability & monitoring
 - Security & compliance
-- Integration & extensions
+- Maintenance & operations
 
 ## By lifecycle stage
 
@@ -23,11 +23,11 @@ Good for readers who know what stage they are in. Maps to the journey from first
 
 Mirrors the internal team structure. Familiar to contributors but may not match how customers think.
 
-- Snap Store
-- Snapd
 - Snapcraft
-- LXD
-- Juju
+- Dedicated Snap Store
+- COS for robotics
+- Ubuntu Core
+- ROS ESM
 
 ## Hybrid (need + product)
 

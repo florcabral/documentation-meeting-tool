@@ -18,6 +18,7 @@ function getSessionId() {
 
 export default function App() {
   const [proposals, setProposals] = useState([])
+  const [terms, setTerms] = useState([])
   const [votes, setVotes] = useState([])
   const [comments, setComments] = useState([])
   const [activeTab, setActiveTab] = useState('overview')
@@ -49,6 +50,7 @@ export default function App() {
       ])
 
       setProposals(pData.proposals || [])
+      setTerms(pData.terms || [])
       setVotes(vData.votes || [])
       setComments(cData.comments || [])
       setLastUpdated(new Date())
@@ -111,6 +113,15 @@ export default function App() {
     })
   }
 
+  const handleEditProposal = async (proposalId, title, body) => {
+    await fetch('/api/proposals', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: proposalId, title, body }),
+    })
+    fetchAll()
+  }
+
   const handleDeleteComment = async (proposalId, createdAt) => {
     if (!authorName) return
     await fetch('/api/comments', {
@@ -145,6 +156,10 @@ export default function App() {
     return v ? v.value : null
   }
 
+  const getTermScore = (termId) => getScore(termId)
+  const getUserTermVote = (termId) => getUserVote(termId)
+  const handleTermVote = (termId, value) => handleVote(termId, value)
+
   const activeProposal = proposals.find(
     p => p.id === activeTab || p.title.toLowerCase().replace(/\s+/g, '-') === activeTab
   )
@@ -154,6 +169,15 @@ export default function App() {
       <header className="app-header">
         <div className="header-inner">
           <div className="header-left">
+            {activeTab !== 'overview' && (
+              <button
+                className="home-btn"
+                onClick={() => setActiveTab('overview')}
+                title="Back to overview"
+              >
+                ← Home
+              </button>
+            )}
             <span className="app-logo">⬡</span>
             <span className="app-name">Docs Decision</span>
             {lastUpdated && (
@@ -179,13 +203,15 @@ export default function App() {
       </header>
 
       <main className="app-main">
-        <TabBar
-          proposals={proposals}
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-          onAddProposal={handleAddProposal}
-          getScore={getScore}
-        />
+        {activeTab !== 'overview' && (
+          <TabBar
+            proposals={proposals}
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+            onAddProposal={handleAddProposal}
+            getScore={getScore}
+          />
+        )}
 
         <div className="tab-content">
           {loading ? (
@@ -196,10 +222,15 @@ export default function App() {
           ) : activeTab === 'overview' ? (
             <OverviewTab
               proposals={proposals}
+              terms={terms}
               getScore={getScore}
               getProposalVotes={getProposalVotes}
               getProposalComments={getProposalComments}
               onSelectProposal={setActiveTab}
+              getTermScore={getTermScore}
+              getUserTermVote={getUserTermVote}
+              onTermVote={handleTermVote}
+              onAddProposal={handleAddProposal}
             />
           ) : activeProposal ? (
             <ProposalTab
@@ -212,6 +243,7 @@ export default function App() {
               onVote={(value) => handleVote(activeProposal.id, value)}
               onComment={(text) => handleComment(activeProposal.id, text)}
               onDeleteComment={(createdAt) => handleDeleteComment(activeProposal.id, createdAt)}
+              onEdit={(title, body) => handleEditProposal(activeProposal.id, title, body)}
             />
           ) : (
             <div className="loading-state">

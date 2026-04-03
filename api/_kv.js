@@ -10,4 +10,5 @@ export const KEYS = {
   proposals: (sid) => `session:${sid}:proposals`,
   votes: (sid) => `session:${sid}:votes`,
   comments: (sid) => `session:${sid}:comments`,
+  terms: (sid) => `session:${sid}:terms`,
 }

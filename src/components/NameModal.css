@@ -1,7 +1,7 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -26,7 +26,7 @@
   flex-direction: column;
   gap: 16px;
   animation: slideUp 0.2s ease;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.12);
 }
 
 @keyframes slideUp {

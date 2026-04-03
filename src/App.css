@@ -8,7 +8,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(15, 17, 23, 0.92);
+  background: rgba(244, 245, 249, 0.92);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   height: 52px;
@@ -28,6 +28,24 @@
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.home-btn {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 4px 12px;
+  border-radius: 20px;
+  transition: all 0.15s;
+  margin-right: 2px;
+}
+
+.home-btn:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border-color: var(--border-light);
 }
 
 .app-logo {
@@ -53,7 +71,7 @@
   background: var(--green-dim);
   padding: 2px 8px;
   border-radius: 20px;
-  border: 1px solid rgba(76, 175, 130, 0.25);
+  border: 1px solid rgba(31, 158, 106, 0.25);
 }
 
 .live-dot {

@@ -5,22 +5,22 @@
 }
 
 :root {
-  --bg: #0f1117;
-  --bg-card: #1a1d27;
-  --bg-elevated: #22263a;
-  --border: #2e3250;
-  --border-light: #3a3f60;
-  --text-primary: #e8eaf6;
-  --text-secondary: #8b90b8;
-  --text-muted: #565b80;
-  --accent: #7c6af7;
-  --accent-hover: #9b8df9;
-  --accent-dim: rgba(124, 106, 247, 0.15);
-  --green: #4caf82;
-  --green-dim: rgba(76, 175, 130, 0.15);
-  --red: #f06470;
-  --red-dim: rgba(240, 100, 112, 0.15);
-  --yellow: #f5c542;
+  --bg: #f4f5f9;
+  --bg-card: #ffffff;
+  --bg-elevated: #eaecf4;
+  --border: #d6d9ea;
+  --border-light: #bfc3d8;
+  --text-primary: #1b1e2e;
+  --text-secondary: #474c6e;
+  --text-muted: #8c91b0;
+  --accent: #6c5ce7;
+  --accent-hover: #5a4bd1;
+  --accent-dim: rgba(108, 92, 231, 0.1);
+  --green: #1f9e6a;
+  --green-dim: rgba(31, 158, 106, 0.1);
+  --red: #d63c48;
+  --red-dim: rgba(214, 60, 72, 0.1);
+  --yellow: #c49010;
   --radius: 10px;
   --radius-sm: 6px;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;

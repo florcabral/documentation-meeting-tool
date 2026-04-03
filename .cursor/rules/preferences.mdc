@@ -1,0 +1,23 @@
+---
+description: /preferences — synthesize a new cluster proposal from the top-voted terms
+globs:
+alwaysApply: false
+---
+
+# /preferences
+
+When the user runs `/preferences`, follow these steps:
+
+1. Read `session.json` from the project root to get the full `terms` array (id → label mapping).
+2. Fetch live vote data by calling `GET http://localhost:3000/api/votes`. Parse the response JSON.
+3. For each term (ids starting with `term--`), compute its score: sum of all `value` fields where `proposalId` matches the term id.
+4. Rank terms by score descending. Take the top 10 (or fewer if less than 10 exist).
+5. Follow the instructions in `.cursor/prompts/preferences.md` to synthesize a new cluster proposal.
+6. Append the new proposal as a new `## ` section at the end of `proposals.md`.
+7. Then automatically run `/review` to reload `proposals.md` into `session.json`.
+8. Tell the user:
+   - The top 10 terms and their scores
+   - The title of the new proposal that was generated
+   - That `session.json` and `proposals.md` have been updated
+
+Only trigger this rule when the user message starts with `/preferences` or explicitly asks to synthesize a proposal from top-voted terms.

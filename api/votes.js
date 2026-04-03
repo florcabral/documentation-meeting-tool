@@ -20,20 +20,24 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { proposalId, author, value } = req.body
 
-    if (!proposalId || !author || (value !== 1 && value !== -1)) {
-      return res.status(400).json({ error: 'proposalId, author, and value (+1 or -1) are required' })
+    if (!proposalId || !author || (value !== 1 && value !== -1 && value !== 0)) {
+      return res.status(400).json({ error: 'proposalId, author, and value (+1, -1, or 0 to clear) are required' })
     }
 
     let votes = (await kv.get(key)) || []
 
-    // One vote per author per proposal — overwrite existing
+    // Remove any existing vote for this author+proposal
     votes = votes.filter(v => !(v.proposalId === proposalId && v.author === author))
-    votes.push({
-      proposalId,
-      author: author.trim(),
-      value,
-      createdAt: new Date().toISOString(),
-    })
+
+    // value=0 means clear — don't re-add
+    if (value !== 0) {
+      votes.push({
+        proposalId,
+        author: author.trim(),
+        value,
+        createdAt: new Date().toISOString(),
+      })
+    }
 
     await kv.set(key, votes)
 

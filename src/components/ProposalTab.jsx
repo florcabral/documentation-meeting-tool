@@ -6,7 +6,7 @@ function formatTime(dateStr) {
   return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 }
 
-export default function ProposalTab({ proposal, votes, comments, score, userVote, authorName, onVote, onComment }) {
+export default function ProposalTab({ proposal, votes, comments, score, userVote, authorName, onVote, onComment, onDeleteComment }) {
   const [commentText, setCommentText] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
@@ -94,7 +94,18 @@ export default function ProposalTab({ proposal, votes, comments, score, userVote
               <div key={i} className="comment">
                 <div className="comment-header">
                   <span className="comment-author">{c.author}</span>
-                  <span className="comment-time">{formatTime(c.createdAt)}</span>
+                  <div className="comment-header-right">
+                    <span className="comment-time">{formatTime(c.createdAt)}</span>
+                    {c.author === authorName && (
+                      <button
+                        className="comment-delete"
+                        onClick={() => onDeleteComment(c.createdAt)}
+                        title="Remove comment"
+                      >
+                        ×
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <p className="comment-text">{c.text}</p>
               </div>

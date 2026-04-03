@@ -88,10 +88,13 @@ export default function App() {
 
   const handleVote = async (proposalId, value) => {
     requireName(async (author) => {
+      // clicking the active vote again clears it
+      const existing = votes.find(v => v.proposalId === proposalId && v.author === author)
+      const newValue = existing?.value === value ? 0 : value
       await fetch('/api/votes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ proposalId, author, value }),
+        body: JSON.stringify({ proposalId, author, value: newValue }),
       })
       fetchAll()
     })
@@ -106,6 +109,16 @@ export default function App() {
       })
       fetchAll()
     })
+  }
+
+  const handleDeleteComment = async (proposalId, createdAt) => {
+    if (!authorName) return
+    await fetch('/api/comments', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ proposalId, author: authorName, createdAt }),
+    })
+    fetchAll()
   }
 
   const handleAddProposal = async (title, body) => {
@@ -195,6 +208,7 @@ export default function App() {
               authorName={authorName}
               onVote={(value) => handleVote(activeProposal.id, value)}
               onComment={(text) => handleComment(activeProposal.id, text)}
+              onDeleteComment={(createdAt) => handleDeleteComment(activeProposal.id, createdAt)}
             />
           ) : (
             <div className="loading-state">

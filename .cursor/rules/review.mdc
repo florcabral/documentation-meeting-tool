@@ -1,5 +1,5 @@
 ---
-description: /review — load proposals.md into session.json for the meeting app
+description: /review — load a proposals file into session.json for the meeting app
 globs:
 alwaysApply: false
 ---
@@ -8,14 +8,17 @@ alwaysApply: false
 
 When the user runs `/review`, follow these steps:
 
-1. Read `proposals.md` from the project root.
-2. Parse every `## ` heading as a proposal title. Collect the body text below each heading as the proposal body (everything up to the next `## ` or end of file).
-3. Follow the instructions in `.cursor/prompts/review.md` exactly.
-4. Write the resulting `session.json` to the project root.
-5. Tell the user to run this command to clear the app and reload from the new session.json:
+1. Determine which file to read:
+   - If the user specifies a filename (e.g. `/review proposals.generated.md`), use that file.
+   - Otherwise default to `proposals.md`.
+2. Read the file from the project root.
+3. Parse every `## ` heading as a proposal title. Collect the body text below each heading as the proposal body (everything up to the next `## ` or end of file).
+4. Follow the instructions in `.cursor/prompts/review.md` exactly.
+5. Write the resulting `session.json` to the project root.
+6. Tell the user to run this command to clear the app and reload from the new session.json:
    ```bash
    curl -X POST http://localhost:3000/api/reset
    ```
-6. Confirm to the user: how many proposals were loaded, and what `session.json` now contains.
+7. Confirm to the user: which file was read, how many proposals were loaded, and what `session.json` now contains.
 
 Only trigger this rule when the user message starts with `/review` or explicitly asks to load proposals into the app.

@@ -11,8 +11,8 @@ When the user runs `/propose`, follow these steps:
 1. Read all files inside the `context/` directory in the project root. Treat their combined contents as the raw input context.
 2. If `context/` is empty or does not exist, tell the user to add their source material there (meeting notes, a Google Doc export, a brief, bullet points — any plain text or markdown files) and stop.
 3. Follow the instructions in `.cursor/prompts/propose.md` to generate 3-4 structured proposal options from that context.
-4. Write the result as `proposals.md` in the project root using the format described in `.cursor/skills/proposals.md`.
-5. Then automatically run `/review` to load the proposals into `session.json`.
+4. Write the result as `proposals.generated.md` in the project root using the format described in `.cursor/skills/proposals.md`. Do NOT write to `proposals.md` — that file is reserved for manually authored proposals.
+5. Then automatically run `/review` pointing at `proposals.generated.md` to load the proposals into `session.json`.
 6. Confirm to the user: which files were read from `context/`, what proposals were generated, and that `session.json` is ready.
 
 Only trigger this rule when the user message starts with `/propose` or asks to generate proposals from raw context.

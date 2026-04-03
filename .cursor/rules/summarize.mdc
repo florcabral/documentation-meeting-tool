@@ -1,0 +1,17 @@
+---
+description: /summarize — write discussion.md from live vote data after the meeting
+globs:
+alwaysApply: false
+---
+
+# /summarize
+
+When the user runs `/summarize`, follow these steps:
+
+1. Read `session.json` from the project root to get the session ID and proposal list.
+2. Fetch the final vote and comment state by calling: `GET /api/summarize` (or instruct the user to run `curl http://localhost:3000/api/summarize` if the app is running locally).
+3. Follow the instructions in `.cursor/prompts/summarize.md` to produce the summary.
+4. Write the result as `discussion.md` in the project root.
+5. Confirm to the user: the winning option, the score breakdown, and that `discussion.md` has been written.
+
+Only trigger this rule when the user message starts with `/summarize` or asks to write the meeting summary.

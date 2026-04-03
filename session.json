@@ -1,0 +1,36 @@
+{
+  "id": "20260402",
+  "title": "Landing page navigation structure",
+  "date": "2026-04-02",
+  "facilitator": "facilitator",
+  "proposals": [
+    {
+      "id": "option-1-by-customer-need",
+      "title": "Option 1: by customer need",
+      "body": "Groups content by what problem the reader is trying to solve. Each section answers a specific question a customer might have.\n\n- Packaging & distribution\n- Observability & monitoring\n- Security & compliance\n- Integration & extensions",
+      "author": "facilitator",
+      "createdAt": "2026-04-02T09:00:00.000Z"
+    },
+    {
+      "id": "option-2-by-lifecycle-stage",
+      "title": "Option 2: by lifecycle stage",
+      "body": "Good for readers who know what stage they are in. Maps to the journey from first install to long-term operation.\n\n- Develop\n- Build & publish\n- Deploy\n- Operate\n- Maintain",
+      "author": "facilitator",
+      "createdAt": "2026-04-02T09:00:01.000Z"
+    },
+    {
+      "id": "option-3-by-product-area",
+      "title": "Option 3: by product area",
+      "body": "Mirrors the internal team structure. Familiar to contributors but may not match how customers think.\n\n- Snap Store\n- Snapd\n- Snapcraft\n- LXD\n- Juju",
+      "author": "facilitator",
+      "createdAt": "2026-04-02T09:00:02.000Z"
+    },
+    {
+      "id": "option-4-hybrid",
+      "title": "Option 4: hybrid (need + product)",
+      "body": "Top level by customer need, second level by product. Balances discoverability for new customers with precision for experienced ones.\n\n- Get started (→ quickstarts per product)\n- Build & package (→ Snap, OCI, Charm)\n- Deploy & operate (→ Juju, LXD)\n- Monitor & secure (→ Observability stack)",
+      "author": "facilitator",
+      "createdAt": "2026-04-02T09:00:03.000Z"
+    }
+  ]
+}

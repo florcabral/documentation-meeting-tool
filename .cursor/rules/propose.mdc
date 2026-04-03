@@ -1,0 +1,17 @@
+---
+description: /propose — generate structured proposals from raw context
+globs:
+alwaysApply: false
+---
+
+# /propose
+
+When the user runs `/propose`, follow these steps:
+
+1. Read any raw context the user has pasted (meeting notes, a Google Doc excerpt, a brief, bullet points).
+2. Follow the instructions in `.cursor/prompts/propose.md` to generate 3-4 structured proposal options.
+3. Write the result as `proposals.md` in the project root using the format described in `.cursor/skills/proposals.md`.
+4. Then automatically run `/review` to load the proposals into `session.json`.
+5. Confirm to the user: what proposals were generated, and that `session.json` is ready.
+
+Only trigger this rule when the user message starts with `/propose` or asks to generate proposals from raw context.

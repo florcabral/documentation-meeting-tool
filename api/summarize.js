@@ -1,0 +1,25 @@
+import { kv, getSessionId, KEYS } from './_kv.js'
+
+export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end()
+  }
+
+  if (req.method !== 'GET') {
+    return res.status(405).json({ error: 'Method not allowed' })
+  }
+
+  const sessionId = getSessionId()
+
+  const [proposals, votes, comments] = await Promise.all([
+    kv.get(KEYS.proposals(sessionId)).then(v => v || []),
+    kv.get(KEYS.votes(sessionId)).then(v => v || []),
+    kv.get(KEYS.comments(sessionId)).then(v => v || []),
+  ])
+
+  return res.status(200).json({ sessionId, proposals, votes, comments })
+}
